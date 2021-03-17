@@ -154,6 +154,7 @@ public final class FST<T> implements Accountable {
 
     private int label;
 
+    // 边的输出
     private T output;
 
     private long target;

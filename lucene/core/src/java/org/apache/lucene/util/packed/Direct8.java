@@ -29,7 +29,7 @@ import java.util.Arrays;
  * @lucene.internal
  */
 final class Direct8 extends PackedInts.MutableImpl {
-  final byte[] values;
+  final byte[] values; // 每个元素一个字节，即使用一个字节来存储一个整数
 
   Direct8(int valueCount) {
     super(valueCount, 8);
@@ -48,7 +48,7 @@ final class Direct8 extends PackedInts.MutableImpl {
 
   @Override
   public long get(final int index) {
-    return values[index] & 0xFFL;
+    return values[index] & 0xFFL; // 这里与上 0xFFL 才能保证还原出原来的整数（考虑高位为 1 的情况）
   }
 
   @Override

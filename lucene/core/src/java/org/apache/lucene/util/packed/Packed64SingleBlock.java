@@ -249,6 +249,7 @@ abstract class Packed64SingleBlock extends PackedInts.MutableImpl {
     }
   }
 
+  // Packed64SingleBlock1 中的每个整数只占 1 bit, 也就是只存整数 0 或者 1
   static class Packed64SingleBlock1 extends Packed64SingleBlock {
 
     Packed64SingleBlock1(int valueCount) {
@@ -265,10 +266,10 @@ abstract class Packed64SingleBlock extends PackedInts.MutableImpl {
 
     @Override
     public void set(int index, long value) {
-      final int o = index >>> 6;
-      final int b = index & 63;
-      final int shift = b << 0;
-      blocks[o] = (blocks[o] & ~(1L << shift)) | (value << shift);
+      final int o = index >>> 6; // 这里无符号右移6位（除以64）的目的：由于每个整数只需要 1 bit 来存储，那么每个 block 能够存储 64 个整数，除以64定位具体block
+      final int b = index & 63; // 这里相当于对 mod 64, 得到 index 在块内的偏移
+      final int shift = b << 0; // 这里为什么左移0位，没明白，但是 shift 依旧等于 b
+      blocks[o] = (blocks[o] & ~(1L << shift)) | (value << shift); // 前部分将 blocks[o] 的第 shift 位置 0，后半部分将 value 左移 shift 放到正确位置，或起来即将 value 放到 blocks[o] 的第 shift 位
     }
 
   }

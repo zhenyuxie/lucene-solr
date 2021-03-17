@@ -554,9 +554,13 @@ public class Builder<T> {
   }
 
   /** Expert: holds a pending (seen but not yet serialized) arc. */
+  // FST 的边
   public static class Arc<T> {
+    // 每个边代表着一个字符，label 是字符的 ASCII 值
     public int label;                             // really an "unsigned" byte
+    // 边指向的节点
     public Node target;
+    // 是否是终边
     public boolean isFinal;
     public T output;
     public T nextFinalOutput;
@@ -585,6 +589,7 @@ public class Builder<T> {
   /** Expert: holds a pending (seen but not yet serialized) Node. */
   public static final class UnCompiledNode<T> implements Node {
     final Builder<T> owner;
+    // 该节点的出边条数
     public int numArcs;
     public Arc<T>[] arcs;
     // TODO: instead of recording isFinal/output on the
@@ -592,10 +597,13 @@ public class Builder<T> {
     // we do when reading the FST).  Would simplify much
     // code here...
     public T output;
+    // 是否是终点
     public boolean isFinal;
+    // 这个节点上UnCompiledNode进来的边。实际基本并没有使用
     public long inputCount;
 
     /** This node's depth, starting from the automaton root. */
+    // 从根节点到本节点的深度
     public final int depth;
 
     /**

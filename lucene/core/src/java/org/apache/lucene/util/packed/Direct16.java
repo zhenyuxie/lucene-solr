@@ -29,7 +29,7 @@ import java.util.Arrays;
  * @lucene.internal
  */
 final class Direct16 extends PackedInts.MutableImpl {
-  final short[] values;
+  final short[] values; // 使用两个字节来存储一个整数
 
   Direct16(int valueCount) {
     super(valueCount, 16);
